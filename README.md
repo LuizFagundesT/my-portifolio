@@ -3,11 +3,11 @@ Este repositório apresenta um portfólio profissional com projetos desenvolvido
 
 Seu objetivo é disponibilizar exemplos práticos e organizados que evidenciem a aplicação de tecnologias modernas e boas práticas no desenvolvimento de soluções funcionais, facilitando o acesso de recrutadores e interessados aos trabalhos realizados.
 
-#🛠 Tecnologias Utilizadas
+# 🛠 Tecnologias Utilizadas
 
-##💻 Front-end
+## 💻 Front-end
   
-##💻 Back-end
+## 💻 Back-end
 
 ## 📸 Protótipos do Portfólio
 Veja também o protótipo no [Figman](https://www.figma.com/design/COAKgSRbRgsxiYsUZUZx69/Wireframe-Portif%C3%B3lio---m%C3%A9dia-fid-?node-id=0-1&t=RorW6WAPHX1OuVqd-1)
