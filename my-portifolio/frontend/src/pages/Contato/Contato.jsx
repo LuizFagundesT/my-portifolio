@@ -72,7 +72,7 @@ export default function Contato() {
                         ))}
                         <div className={styleContato.SpotifyPlayerContainer}>
                                               <SpotifyPlayer
-                                                  linkMusica="https://open.spotify.com/embed/track/2Z8WuEywRWYTKe1NybPQEW?utm_source=generator&theme=0"
+                                                  linkMusica="https://open.spotify.com/embed/track/67ncYmW29pNJJY2yXuLPwT?utm_source=generator"
                                               />
                                           </div>
                     </div>
