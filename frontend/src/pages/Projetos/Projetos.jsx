@@ -1,30 +1,28 @@
 import { useEffect, useState, useCallback } from "react";
 import styles from "./Projetos.module.css";
 import { userData } from "../../data/userData.js";
-import BackgroundCanvas from "../../components/BackgroundCanvas";
+import BackgroundCanvas from "../../components/BackgroundCanvas.jsx";
 
-
-import SpotifyPlayer from '../../components/SpotifyPlayer';
+import SpotifyPlayer from "../../components/SpotifyPlayer.jsx";
 
 import portfolioImg from "../../assets/gitPortifolio.gif";
 import readmeGit from "../../assets/readmeGit.gif";
-import emailEstoque from  "../../assets/emailEstoque.gif";
-import sensorfix from  "../../assets/sensor-fix.gif";
-
+import emailEstoque from "../../assets/emailEstoque.gif";
+import sensorfix from "../../assets/sensor-fix.gif";
 
 const repoImages = {
-  "Portifolio": portfolioImg,
-  "LuizFagundesT" : readmeGit,
+  Portifolio: portfolioImg,
+  LuizFagundesT: readmeGit,
   "alerta-deposito-incorreto": emailEstoque,
-  "Sensor-fix-Ti2": sensorfix
+  "Sensor-fix-Ti2": sensorfix,
   //"NomedoRepositorio" bisnaguinha,
 };
 
-// ✏️ REPOS EM DESTAQUE no carrossel — PARA DESTACAR PROJETOS NO CARROSEL - 
+// ✏️ REPOS EM DESTAQUE no carrossel — PARA DESTACAR PROJETOS NO CARROSEL -
 const featuredRepos = [
   "Portifolio",
   "LuizFagundesT",
-  "alerta-deposito-incorreto"
+  "alerta-deposito-incorreto",
 ];
 
 export default function Projetos() {
@@ -36,7 +34,13 @@ export default function Projetos() {
     async function buscarRepos() {
       try {
         const response = await fetch(
-          `https://api.github.com/users/${userData.githubName}/repos`
+          `https://api.github.com/users/${userData.githubName}/repos`,
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
+              Accept: "application/vnd.github+json",
+            },
+          },
         );
         const data = await response.json();
 
@@ -69,19 +73,20 @@ export default function Projetos() {
 
   // Retorna imagem customizada ou fallback do GitHub
   function getRepoImage(repo) {
-    return repoImages[repo.name] || `https://opengraph.githubassets.com/1/${repo.full_name}`;
+    return (
+      repoImages[repo.name] ||
+      `https://opengraph.githubassets.com/1/${repo.full_name}`
+    );
   }
 
   return (
     <section className={styles.projetos}>
       <BackgroundCanvas />
-      
+
       <h1 className={styles.h1}>Meus projetos</h1>
       <p>Veja aqui um pouco dos meus projetos!</p>
       <div className={styles.SpotifyPlayerContainer}>
-         <SpotifyPlayer
-            linkMusica="https://open.spotify.com/embed/track/2wtnWkmyE2ivwmDyVfJ8N5?utm_source=generator&theme=0"
-          />
+        <SpotifyPlayer linkMusica="https://open.spotify.com/embed/track/2wtnWkmyE2ivwmDyVfJ8N5?utm_source=generator&theme=0" />
       </div>
       {/* ── CARROSSEL ── */}
       {featured.length > 0 && (
@@ -121,7 +126,9 @@ export default function Projetos() {
                     {repo.language && (
                       <span className={styles.language}>{repo.language}</span>
                     )}
-                    <span className={styles.stars}>⭐ {repo.stargazers_count}</span>
+                    <span className={styles.stars}>
+                      ⭐ {repo.stargazers_count}
+                    </span>
                   </div>
 
                   <a
