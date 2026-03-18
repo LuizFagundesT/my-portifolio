@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import styles from "./Projetos.module.css";
 import { userData } from "../../data/userData.js";
 import BackgroundCanvas from "../../components/BackgroundCanvas.jsx";
-
 import SpotifyPlayer from "../../components/SpotifyPlayer.jsx";
 
 import portfolioImg from "../../assets/gitPortifolio.gif";
@@ -15,10 +14,9 @@ const repoImages = {
   LuizFagundesT: readmeGit,
   "alerta-deposito-incorreto": emailEstoque,
   "Sensor-fix-Ti2": sensorfix,
-  //"NomedoRepositorio" bisnaguinha,
 };
 
-// ✏️ REPOS EM DESTAQUE no carrossel — PARA DESTACAR PROJETOS NO CARROSEL -
+// ✏️ REPOS EM DESTAQUE
 const featuredRepos = [
   "Portifolio",
   "LuizFagundesT",
@@ -42,6 +40,7 @@ export default function Projetos() {
             },
           },
         );
+
         const data = await response.json();
 
         const filtrados = data
@@ -71,11 +70,24 @@ export default function Projetos() {
     setCurrent((c) => (c === featured.length - 1 ? 0 : c + 1));
   }, [featured.length]);
 
-  // Retorna imagem customizada ou fallback do GitHub
-  function getRepoImage(repo) {
+  function hasCustomImage(repo) {
+    return !!repoImages[repo.name];
+  }
+
+  function RepoTemplate({ repo }) {
     return (
-      repoImages[repo.name] ||
-      `https://opengraph.githubassets.com/1/${repo.full_name}`
+      <div className={styles.repoTemplate}>
+        <span className={styles.repoTemplateBadge}>Projeto GitHub</span>
+        <h3 className={styles.repoTemplateTitle}>{repo.name}</h3>
+        <p className={styles.repoTemplateDesc}>
+          {repo.description || "Projeto sem descrição disponível."}
+        </p>
+
+        <div className={styles.repoTemplateMeta}>
+          <span>{repo.language || "N/A"}</span>
+          <span>⭐ {repo.stargazers_count}</span>
+        </div>
+      </div>
     );
   }
 
@@ -85,9 +97,11 @@ export default function Projetos() {
 
       <h1 className={styles.h1}>Meus projetos</h1>
       <p>Veja aqui um pouco dos meus projetos!</p>
+
       <div className={styles.SpotifyPlayerContainer}>
         <SpotifyPlayer linkMusica="https://open.spotify.com/embed/track/2wtnWkmyE2ivwmDyVfJ8N5?utm_source=generator&theme=0" />
       </div>
+
       {/* ── CARROSSEL ── */}
       {featured.length > 0 && (
         <div className={styles.carrosselWrapper}>
@@ -112,7 +126,11 @@ export default function Projetos() {
                 }`}
               >
                 <div className={styles.featuredImage}>
-                  <img src={getRepoImage(repo)} alt={repo.name} />
+                  {hasCustomImage(repo) ? (
+                    <img src={repoImages[repo.name]} alt={repo.name} />
+                  ) : (
+                    <RepoTemplate repo={repo} />
+                  )}
                   <div className={styles.featuredOverlay} />
                 </div>
 
@@ -170,7 +188,11 @@ export default function Projetos() {
         {repos.map((repo) => (
           <div key={repo.id} className={styles.card}>
             <div className={styles.image}>
-              <img src={getRepoImage(repo)} alt={repo.name} />
+              {hasCustomImage(repo) ? (
+                <img src={repoImages[repo.name]} alt={repo.name} />
+              ) : (
+                <RepoTemplate repo={repo} />
+              )}
             </div>
 
             <div className={styles.content}>
